@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.http import HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from .forms import *
 from .models import Video
@@ -50,3 +51,16 @@ def video_list(request):
         search_term = SearchForm()
         videos = Video.objects.all().order_by(Lower('title')) 
     return render(request, 'video_collection/video_list.html', {'videos': videos, 'search_form': search_form, 'search_term': search_term})
+
+def video_detail(request, video_pk):
+    # get video details
+    video = get_object_or_404(Video, pk=video_pk)
+    return render(request, 'video_collection/video_detail.html', {'video': video})
+
+def delete_video(request, video_pk):
+    # delete video
+    video = get_object_or_404(Video, pk=video_pk)
+    if request.method == 'POST': 
+        video.delete()
+        messages.info(request, 'Video deleted successfully!')
+        return redirect('video_list') # redirect to video_list page

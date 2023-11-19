@@ -1,0 +1,29 @@
+{% extends 'video_collection/base.html' %} {% block content %}
+
+<div>
+  <div>
+    <div>
+      <h1>Video Detail</h1>
+      <h2>{{ video.title }}</h2>
+      <p>{{ video.notes }}</p>
+      <p>{{ video.url }}</p>
+
+      <div class="video-detail-single-page">
+
+      <a href="{% url 'video_list' %}"  class="video-back-button">Back to list</a>
+
+
+      <form
+        action="{% url 'delete_video' video.pk %}"
+        method="POST"
+        id="delete-form"
+      >
+        {% csrf_token %}
+        <button type="submit" class="video-delete-button" id="delete">Delete</button>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

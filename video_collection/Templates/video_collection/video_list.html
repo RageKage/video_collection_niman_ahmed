@@ -27,6 +27,10 @@
       allowfullscreen
     >
     </iframe>
+    <div class="video-detail">
+    <a href="{% url 'video_detail' video_pk=video.pk %}">View Details</a>
+  </div>
+
   </div>
   {% empty %}
   <p class="no-videos">There are no videos in this collection.</p>

@@ -434,3 +434,31 @@ class TestVideoModel(TestCase):
         with self.assertRaises(IntegrityError):
             Video.objects.create(title='example', url='https://www.youtube.com/watch?v=IODxDxX7oi4')
 
+
+class TestVideoDetails(TestCase):
+    
+    def test_video_detail_if_exist(self):
+        # Create a video
+        video = Video.objects.create(title='example', url='https://www.youtube.com/watch?v=IODxDxX7oi4')
+        
+        # Get the video details
+        response = self.client.get(reverse('video_detail', kwargs={'video_pk':video.pk}))
+        
+        # Check if the video details are displayed
+        self.assertTemplateUsed('video_collection/video_detail.html')
+        
+
+        self.assertContains(response, video.title)
+        self.assertContains(response, video.url)
+        self.assertContains(response, video.notes)
+        
+    def test_video_detail_if_not_exist(self):
+        # Get the video details
+        response = self.client.get(reverse('video_detail', kwargs={'video_pk':123}))
+        
+        
+    
+        self.assertTemplateUsed('video_collection/video_detail.html')
+        
+        # Check that it is not found
+        self.assertEqual(404, response.status_code)
