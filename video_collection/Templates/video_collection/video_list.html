@@ -1,0 +1,35 @@
+{% extends 'video_collection/base.html' %} {% block content %}
+<div id="video-collection">
+  <h1 class="collection-title">Video Collection</h1>
+
+  {% if search_form %}
+  <form method="GET" action="{% url 'video_list' %}" class="search-form">
+    {{ search_form.as_p }}
+    <input type="submit" value="Search" class="search-button" />
+  </form>
+
+  <a href="{% url 'video_list' %}" class="reset-search"> Reset Search </a>
+  {% endif %}
+
+  <h3>{{ videos|length }} video{{ videos|length|pluralize }}</h3>
+
+
+  {% for video in videos %}
+  <div class="video">
+    <h2 class="video-title">{{ video.title }}</h2>
+    <p class="video-notes">{{ video.notes }}</p>
+    <iframe
+      class="video-frame"
+      width="600"
+      height="400"
+      src="https://www.youtube.com/embed/{{ video.video_ID }}"
+      frameborder="0"
+      allowfullscreen
+    >
+    </iframe>
+  </div>
+  {% empty %}
+  <p class="no-videos">There are no videos in this collection.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Video Collect</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css"
+    />
+  </head>
+
+  <body>
+    <header id="header">
+      {% comment %}
+      https://stackoverflow.com/questions/7665514/django-highlight-navigation-based-on-current-page
+      {% endcomment %}
+      <nav id="header-links">
+        {% url 'home' as home_url %}
+        <a
+          class="nav-link{% if request.path == home_url %} active{% endif %}"
+          href="{{ home_url }}"
+          >Home</a
+        >
+        {% url 'add_video' as add_video_url %}
+        <a
+          class="nav-link{% if request.path == add_video_url %} active{% endif %}"
+          href="{{ add_video_url }}"
+          >Add Video</a
+        >
+        {% url 'video_list' as video_list_url %}
+        <a
+          class="nav-link{% if request.path == video_list_url %} active{% endif %}"
+          href="{{ video_list_url }}"
+          >Videos</a
+        >
+      </nav>
+    </header>
+
+    <div id="content">{% block content %}{% endblock %}</div>
+  </body>
+</html>

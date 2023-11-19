@@ -1,0 +1,16 @@
+{% extends 'video_collection/base.html' %} {% block content %}
+
+<div id="new_video_div">
+  <h1>Add new Video</h1>
+
+  {% for message in messages %}
+  <p id="message-error">{{ message }}</p>
+  {% endfor %}
+
+  <form method="POST" action="{% url 'add_video' %}" class="new_video">
+    {% csrf_token %} {{ new_video_form }}
+    <button type="submit">Add Video</button>
+  </form>
+</div>
+
+{% endblock %}
